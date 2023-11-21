@@ -1,9 +1,9 @@
 netsh wlan export profile key=clear
 # First, search for 'keyMaterial' in files and redirect output to 'Wi-Fi-PASS'
-Select-String -Path Wi*.xml -Pattern 'keyMaterial' > Wi-Fi-PASS
+Select-String -Path %temp%/Wi*.xml -Pattern 'keyMaterial' > %temp%/Wi-Fi-PASS
 
 # Then, process 'Wi-Fi-PASS' to create and save JSON
-Get-Content 'Wi-Fi-PASS' | ForEach-Object {
+Get-Content '%temp%/Wi-Fi-PASS' | ForEach-Object {
     $parts = $_ -split ':\d+:\s+|<keyMaterial>|</keyMaterial>'
     if ($parts.Length -eq 4) {
         [PSCustomObject]@{
@@ -11,4 +11,4 @@ Get-Content 'Wi-Fi-PASS' | ForEach-Object {
             password = $parts[2].Trim()
         }
     }
-} | ConvertTo-Json | Set-Content 'WIFI-Pass.json'
+} | ConvertTo-Json | Set-Content '%temp%/WIFI-Pass.json'
