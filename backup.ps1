@@ -11,4 +11,4 @@ Get-Content "$env:temp\Wi-Fi-PASS" | ForEach-Object {
             password = $parts[2].Trim()
         }
     }
-} | ConvertTo-Json | Set-Content "$env:temp\WIFI-Pass.json"
+} | ConvertTo-Json | Set-Content "$env:temp\Wi-Fi-PASS.json"
